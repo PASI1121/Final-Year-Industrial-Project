@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commercial Printing Orders System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: grey;
+            margin: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background-color: rgb(123, 123, 222);
+            color: black;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px 8px 0 0;
+        }
+        label {
+            background-color: rgb(167, 213, 235);
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        .form-group {
+            display: flex;
+            justify-content: space-between;
+        }
+        .column {
+            width: 48%;
+        }
+        .hidden {
+            display: none;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between; /* Distributes buttons evenly */
+            gap: 10px; /* Adds spacing between buttons */
+            flex-wrap: wrap; /* Prevents overflow on smaller screens */
+        }
+
+        .button-group button {
+            flex: 1; /* Ensures equal width */
+            padding: 10px;
+            text-align: center;
+        }
+        .button-group button {
+            flex: 1; /* Make buttons equal width */
+            padding: 10px;
+            text-align: center;
+            white-space: nowrap; /* Prevent text from wrapping */
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">Commercial Printing Orders System</div>
+        <label>Order Type:</label>
+        <select id="orderType" onchange="toggleOrderFields()">
+            <option value="internal" >Internal Order</option>
+            <option value="external" >External Order</option>
+        </select>
+
+        <div id="internalOrderForm" style="display: none;">
+            <label>Job No:</label><input type="text" id="intJobNo">
+            <label>Date:</label><input type="date" id="intDate">
+            <label>Customer:</label><input type="text" id="intCustomer">
+            <label>Description:</label><input type="text" id="intDescription">
+            <label>Product:</label>
+            <select id="intProduct">
+                <option value="">--Select Product--</option>
+                <option value="Visiting Cards">Visiting Cards</option>
+                <option value="Bookmarks">Bookmarks</option>
+                <option value="Certificate">Certificate</option>
+                <option value="Filecovers">Filecovers</option>
+                <option value="Greeting Cards">Greeting Cards</option>
+                <option value="Invitation Cards">Invitation Cards</option>
+                <option value="Letterheads">Letterheads</option>
+                <option value="Brochures">Brochures</option>
+                <option value="Calendars">Calendars</option>
+                <option value="Magazines">Magazines</option>
+                <option value="Posters">Posters</option>
+                <option value="Leaflets">Leaflets</option>
+                <option value="Postcards">Postcards</option>
+                <option value="Catalogs">Catalogs</option>
+                <option value="Flyers">Flyers</option>
+                <option value="Event Tickets">Event Tickets</option>
+                <option value="Pictures">Pictures</option>
+                <option value="Covers">Covers</option>
+                <option value="Label Printing">Label Printing</option>
+                <option value="Envelops">Envelops</option>
+                <option value="Tabloids">Tabbloids</option>
+            </select>
+            <label>Actual Cost:</label><input type="number" id="intActualCost">
+            <!-- <button onclick="submitOrder()">Enter Order</button> -->
+            <div class="button-group">
+            
+                <button onclick="submitOrder()">Enter Order</button>
+                <!-- <button type="button" onclick="searchData()">Search Data</button> -->
+                <!-- <button type="button" onclick="updateData()">Update Data</button> -->
+                <button type="button" onclick="clearFields()">Clear Fields</button>
+            </div>
+        </div>
+        <!-- <div class="button-group">
+            
+            <button onclick="submitOrder()">Enter Order</button>
+            <button type="button" onclick="searchData()">Search Data</button>
+            <button type="button" onclick="updateData()">Update Data</button>
+            <button type="button" onclick="clearFields()">Clear Fields</button>
+        </div> -->
+
+        <div id="externalOrderForm" style="display: none;">
+            <div class="form-group">
+                <div class="column">
+                    <label>Job No:</label><input type="text" id="extJobNo">
+                    <label>Client:</label><input type="text" id="extClient">
+                    <label>Date:</label><input type="date" id="extDate">
+                    <label>Delivery Date:</label><input type="date" id="extDeliveryDate">
+                    <label>Unit Price:</label><input type="number" id="extUnitPrice">
+                    <label>Discount (%):</label><input type="number" id="extDiscount">
+                    <label>VAT (%):</label><input type="number" id="extVAT">
+                    <!-- <button onclick="calculateTotalPrice()">Calculate Total Price</button> -->
+                </div>
+                <div class="column">
+                    <label>Invoice No:</label><input type="text" id="extInvoiceNo">
+                    <label>Client Category:</label>
+                    <select id="clientCategory">
+                        <option value="">--Select Category--</option>
+                        <option value="Manufacturing">Manufacturing</option>
+                        <option value="Publishing">Publishing</option>
+                        <option value="Supermarkets">Supermarkets</option>
+                        <option value="Education Institution">Education Institution</option>
+                        <option value="Healthcare">Healthcare</option>
+                        <option value="Individual">Individual</option>
+                        <option value="Non-Profit Organization">Non-Profit Organization</option>
+                        <option value="Hospitality">Hospitality</option>
+                        <option value="Others">Others</option>
+                    </select>
+                    <label>Product:</label>
+                    <select id="extproduct">
+                        <option value="">--Select Product--</option>
+                        <option value="Visiting Cards">Visiting Cards</option>
+                        <option value="Bookmarks">Bookmarks</option>
+                        <option value="Certificate">Certificate</option>
+                        <option value="Filecovers">Filecovers</option>
+                        <option value="Greeting Cards">Greeting Cards</option>
+                        <option value="Invitation Cards">Invitation Cards</option>
+                        <option value="Letterheads">Letterheads</option>
+                        <option value="Brochures">Brochures</option>
+                        <option value="Calendars">Calendars</option>
+                        <option value="Magazines">Magazines</option>
+                        <option value="Posters">Posters</option>
+                        <option value="Leaflets">Leaflets</option>
+                        <option value="Postcards">Postcards</option>
+                        <option value="Catalogs">Catalogs</option>
+                        <option value="Flyers">Flyers</option>
+                        <option value="Event Tickets">Event Tickets</option>
+                        <option value="Label Printing">Label Printing</option>
+                    </select>
+                    <label>Handover Date:</label><input type="date" id="extHandoverDate">
+                    <label>Quantity:</label><input type="number" id="extQuantity">
+                    <label>Description:</label><input type="text" id="extDescription">
+                    <label>Total Price:</label><input type="number" id="extTotalPrice" readonly>
+                    <!-- <button onclick="submitOrder()">Enter Order</button> -->
+                    
+                </div>
+                
+            </div>
+            <div class="button-group">
+                <button onclick="calculateTotalPrice()">Calculate Total Price</button>
+                <button onclick="submitOrder()">Enter Order</button>
+                <!-- <button type="button" onclick="searchData()">Search Data</button> -->
+                <!-- <button type="button" onclick="updateData()">Update Data</button> -->
+                <button onclick="clearFields()">Clear Fields</button>
+            </div>
+        </div>
+
+        <!-- <button onclick="submitOrder()">Enter Order</button> -->
+    </div>
+
+    <script>
+        document.getElementById("orderType").addEventListener("change", function() {
+            document.getElementById("internalForm").classList.toggle("hidden", this.value !== "internal");
+            document.getElementById("externalForm").classList.toggle("hidden", this.value !== "external");
+        });
+///////////
+        function toggleOrderFields() {
+            let orderType = document.getElementById("orderType").value;
+            let internalForm = document.getElementById("internalOrderForm");
+            let externalForm = document.getElementById("externalOrderForm");
+
+        if (orderType === "internal") {
+            internalForm.style.display = "block";
+            externalForm.style.display = "none";
+        } else {
+            internalForm.style.display = "none";
+            externalForm.style.display = "block";
+            }
+        }
+////////
+        function calculateTotalPrice() {
+            var unitPrice = parseFloat(document.getElementById("extUnitPrice").value) || 0;
+            var quantity = parseFloat(document.getElementById("extQuantity").value) || 0;
+            var discount = parseFloat(document.getElementById("extDiscount").value) || 0;
+            var vat = parseFloat(document.getElementById("extVAT").value) || 0;
+
+            var subtotal = unitPrice * quantity;
+            var discountAmount = (subtotal * discount) / 100;
+            var vatAmount = ((subtotal - discountAmount) * vat) / 100;
+            var totalPrice = subtotal - discountAmount + vatAmount;
+
+            document.getElementById("extTotalPrice").value = totalPrice.toFixed(2);
+        }
+        
+
+        function submitOrder() {
+            var orderType = document.getElementById("orderType").value;
+            var data = { orderType };
+
+            if (orderType === "internal") {
+                data.jobNo = document.getElementById("intJobNo").value;
+                data.date = document.getElementById("intDate").value;
+                data.customer = document.getElementById("intCustomer").value;
+                data.description = document.getElementById("intDescription").value;
+                data.product = document.getElementById("intProduct").value;
+                data.actualCost = document.getElementById("intActualCost").value;
+            } else {   
+          
+                data.jobNo = document.getElementById("extJobNo").value;
+                data.invoiceNo = document.getElementById("extInvoiceNo").value;
+                data.client = document.getElementById("extClient").value;
+                data.clientCategory = document.getElementById("clientCategory").value;
+                data.date = document.getElementById("extDate").value;
+                data.product = document.getElementById("extproduct").value;
+                data.deliveryDate = document.getElementById("extDeliveryDate").value;
+                data.handoverDate = document.getElementById("extHandoverDate").value;
+                data.unitPrice = document.getElementById("extUnitPrice").value;
+                data.quantity = document.getElementById("extQuantity").value;
+                data.discount = document.getElementById("extDiscount").value;
+                data.vat = document.getElementById("extVAT").value;
+                data.totalPrice = document.getElementById("extTotalPrice").value;
+                data.description = document.getElementById("extDescription").value;
+            
+
+            }
+        
+            fetch("https://script.google.com/macros/s/AKfycbwsaR8s2lLNbNM3hfYgUH6yWgSAwo8i4W5BwR9I2MW_xAXQgP7qWSo897DAIxbWL53G/exec", { method: "POST", body: JSON.stringify(data)})
+            .then(response => response.json()) // Assuming the server returns a JSON response
+            .then(result => {
+                if (result.status === "success") {
+                    alert("Order successfully stored in the data sheet!");
+                } else {
+                    alert("Failed to store order. Please try again.");
+                }
+            })
+            .catch(error => {
+                alert("Error: " + error.message);
+            });
+        
+        }
+        function clearFields() {
+    // Select all input fields and textareas in the form
+            document.querySelectorAll("input, textarea, select").forEach(field => {
+                if (field.type === "checkbox" || field.type === "radio") {
+                    field.checked = false; // Uncheck checkboxes and radio buttons
+                } else {
+                    field.value = ""; // Clear text, number, and other input fields
+                }   
+            });
+        }
+    </script>
+</body>
+</html>
+
